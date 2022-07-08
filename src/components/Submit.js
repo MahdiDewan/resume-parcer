@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { storage, resumesCollection } from "../firebase.js";
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
-import { collection, addDoc, getDocs } from "firebase/firestore";
+import { addDoc, getDocs } from "firebase/firestore";
 import * as XLSX from "xlsx";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import JSONDATA from "../mock-data.json"
 
 
 
 export const Submit = () => {
-    const [items, setItems] = useState([]);
     const [imgUrl, setImgUrl] = useState(null);
     const [progresspercent, setProgresspercent] = useState(0);
-    const [resumeArray, setResumeArray] = useState(JSONDATA)
+    const [resumeArray, setResumeArray] = useState([])
     const [searchTerm, setSearchTerm] = useState("")
 
 
@@ -81,11 +79,10 @@ export const Submit = () => {
         });
 
         promise.then((d) => {
-            setItems(d);
             addDoc(resumesCollection, {
-                Name: items[0].Name,
-                Experience: items[0].Experience,
-                Skills: items[0].Skills
+                Name: d[0].Name,
+                Experience: d[0].Experience,
+                Skills: d[0].Skills
             })
         });
     };
