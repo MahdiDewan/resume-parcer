@@ -3,6 +3,8 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, collection } from "firebase/firestore"
 import { getStorage } from "firebase/storage";
 
+import { getAuth, GoogleAuthProvider } from 'firebase/auth';
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -10,8 +12,9 @@ import { getStorage } from "firebase/storage";
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 
 
+
 const firebaseConfig = {
-  apiKey: process.env.FIREBASE_API_KEY,
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: "resume-parser-a09e6.firebaseapp.com",
   projectId: "resume-parser-a09e6",
   storageBucket: "resume-parser-a09e6.appspot.com",
@@ -28,6 +31,14 @@ export const db = getFirestore(app);
 export const storage = getStorage(app); 
 
 export const resumesCollection = collection(db, "resumes")
+
+export const userIdCollection = collection(db, "user_types")
+
+// auth.currentUser.displayName, auth.currentUser.uid
+// Google Authentication
+export const auth = getAuth(app);
+
+export const provider = new GoogleAuthProvider();
 
 
 

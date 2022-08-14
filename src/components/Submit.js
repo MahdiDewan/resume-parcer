@@ -4,10 +4,20 @@ import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { addDoc, getDocs } from "firebase/firestore";
 import * as XLSX from "xlsx";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useNavigate } from 'react-router-dom';
 
 
 
-export const Submit = () => {
+
+export const Submit = ({isAuth}) => {
+    // check if the user is logged in each time this page is loaded when they enter this page.
+    let navigate = useNavigate();
+    useEffect(() => {
+        if (!isAuth) {
+            navigate('/login');
+        }
+    }, []);
+
     const [imgUrl, setImgUrl] = useState(null);
     const [progresspercent, setProgresspercent] = useState(0);
     const [resumeArray, setResumeArray] = useState([])
@@ -93,16 +103,15 @@ export const Submit = () => {
 
     return (
         <div class="container">
-            <h1 class="text-center">Resume Parser</h1>
-            <hr/>
-            <form onSubmit={handleSubmit} className='form' class="row g-3 justify-content-center">
+            {/* <h1 class="text-center">Resume Parser</h1> */}
+            {/* <form onSubmit={handleSubmit} className='form' class="row g-3 justify-content-center">
                 <div class="col-auto">
                     <input class="form-control" type="file" required />
                 </div>
                 <div class="col-auto">
                     <button class="btn btn-primary" type='submit'>Upload</button>
                 </div>
-            </form>
+            </form> */}
             <br/>
             <div class="w-50 mx-auto">
                 <input type="text" placeholder="Search..." class="form-control" onChange={event => {setSearchTerm(event.target.value)}}/>
